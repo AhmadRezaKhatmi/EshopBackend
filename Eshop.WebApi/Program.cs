@@ -1,7 +1,18 @@
+using Eshop.Core.Utilities.Extensions.Connection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
+#region Add Services
+
+builder.Services.AddApplicationDbContext(builder.Configuration);
+
+#endregion
+
 
 var app = builder.Build();
 
