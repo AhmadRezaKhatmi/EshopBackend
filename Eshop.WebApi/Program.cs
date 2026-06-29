@@ -1,4 +1,5 @@
 using Eshop.Core.Utilities.Extensions.Connection;
+using Eshop.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,11 +8,21 @@ builder.Services.AddControllersWithViews();
 
 
 
-#region Add Services
+#region Add DbContext
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 
 #endregion
+
+
+
+#region Add GenericRepository
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+#endregion
+
+
 
 
 var app = builder.Build();
