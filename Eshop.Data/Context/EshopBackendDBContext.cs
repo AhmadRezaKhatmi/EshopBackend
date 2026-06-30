@@ -1,5 +1,6 @@
 ﻿using Eshop.Data.Entities.Access;
 using Eshop.Data.Entities.Account;
+using Eshop.Data.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,16 @@ namespace Eshop.Data.Context
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<UserRole> UserRoles { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public DbSet<ProductGallery> ProductGalleries { get; set; }
+
+        public DbSet<ProductSelectedCategory> ProductSelectedCategories { get; set; }
+
+        public DbSet<ProductVisit> ProductVisits { get; set; }
 
         #endregion
 
