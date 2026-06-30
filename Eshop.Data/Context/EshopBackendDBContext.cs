@@ -1,6 +1,7 @@
 ﻿using Eshop.Data.Entities.Access;
 using Eshop.Data.Entities.Account;
 using Eshop.Data.Entities.Product;
+using Eshop.Data.Entities.Site;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace Eshop.Data.Context
 
         public DbSet<ProductVisit> ProductVisits { get; set; }
 
+        public DbSet<Slider> Sliders { get; set; }
         #endregion
 
 
