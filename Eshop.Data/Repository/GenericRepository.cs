@@ -29,6 +29,7 @@ namespace Eshop.Data.Repository
         public void AddEntity(TEntity entity)
         {
             entity.CreationDateTime = DateTime.Now;
+            entity.ModificationDateTime = DateTime.Now; 
             _dbSet.Add(entity); 
         }
 

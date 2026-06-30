@@ -1,3 +1,5 @@
+using Eshop.Core.Services.Implementations;
+using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Extensions.Connection;
 using Eshop.Data.Repository;
 
@@ -23,6 +25,13 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 #endregion
 
 
+#region Application Services
+
+builder.Services.AddScoped<IUserService, UserService>();
+
+#endregion
+
+
 
 
 var app = builder.Build();
@@ -44,7 +53,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Users}/{action=Users}/{id?}")
     .WithStaticAssets();
 
 

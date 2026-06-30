@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Eshop.Data.Repository
 {
-    public interface IGenericRepository<TEntity> 
+    public interface IGenericRepository<TEntity> : IDisposable
         where TEntity : BaseEntity
     {
         IQueryable<TEntity> GetEntitiesQuery();
