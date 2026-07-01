@@ -28,8 +28,8 @@ namespace Eshop.Data.Repository
 
         public void AddEntity(TEntity entity)
         {
-            entity.CreationDateTime = DateTime.Now;
-            entity.ModificationDateTime = DateTime.Now; 
+            entity.CreateDate = DateTime.Now;
+            entity.LastUpdateDate  = DateTime.Now; 
             _dbSet.Add(entity); 
         }
 
@@ -47,7 +47,7 @@ namespace Eshop.Data.Repository
 
         public void UpdateEntity(TEntity entity)
         {
-            entity.ModificationDateTime = DateTime.Now;
+            entity.LastUpdateDate  = DateTime.Now;
             _dbSet.Update(entity);
         }
 
@@ -55,7 +55,7 @@ namespace Eshop.Data.Repository
 
         public void RemoveEntity(TEntity entity)
         {
-            entity.IsDeleted=true;
+            entity.IsDelete=true;
             UpdateEntity(entity);
         }
 

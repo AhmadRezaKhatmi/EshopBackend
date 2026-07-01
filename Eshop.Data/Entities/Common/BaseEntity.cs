@@ -12,13 +12,11 @@ namespace Eshop.Data.Entities.Common
         [Key]
         public long Id { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsDelete { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public DateTime CreateDate { get; set; }
 
-        public DateTime CreationDateTime { get; set; }
-
-        public DateTime ModificationDateTime { get; set; }
+        public DateTime LastUpdateDate { get; set; }
 
     }
 }

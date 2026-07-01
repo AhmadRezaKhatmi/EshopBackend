@@ -32,7 +32,7 @@ namespace Eshop.Core.Services.Interfaces
         public List<Slider> GetActiveSliders()
         {
             return _sliderRepository.GetEntitiesQuery().
-                Where(x=>x.IsDeleted!=true)
+                Where(x=>x.IsDelete!=true)
                 .ToList();
         }
 
