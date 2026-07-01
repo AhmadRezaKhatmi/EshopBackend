@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Eshop.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SiteBaseController : ControllerBase
     {
