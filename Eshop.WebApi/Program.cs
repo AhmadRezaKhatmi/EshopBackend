@@ -28,6 +28,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 #region Application Services
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISliderService, SliderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 #endregion
 

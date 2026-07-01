@@ -1,0 +1,22 @@
+﻿using Eshop.Data.Entities.Product;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Eshop.Core.Services.Interfaces
+{
+    public interface IProductService : IDisposable
+    {
+
+        #region Product
+
+        void AddProduct(Product product);
+
+        void UpdateProduct(Product product);
+
+        #endregion
+
+    }
+}

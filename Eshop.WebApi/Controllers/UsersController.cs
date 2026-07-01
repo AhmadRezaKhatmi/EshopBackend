@@ -1,4 +1,5 @@
 ﻿using Eshop.Core.Services.Interfaces;
+using Eshop.Core.Utilities.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,9 @@ namespace Eshop.WebApi.Controllers
         [HttpGet("Users")]
         public IActionResult Users()
         {
-            return new ObjectResult(_userService.GetAllUsers());
+            var users = _userService.GetAllUsers();
+
+            return JsonResponseStatus.Success(users);
         }
 
         #endregion
