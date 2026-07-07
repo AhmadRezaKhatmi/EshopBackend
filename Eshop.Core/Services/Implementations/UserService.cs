@@ -1,4 +1,5 @@
 ﻿using Eshop.Core.DTOs.Account;
+using Eshop.Core.Security;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Entities.Account;
 using Eshop.Data.Repository;
@@ -16,10 +17,11 @@ namespace Eshop.Core.Services.Implementations
         #region Contstructor
 
         private readonly IGenericRepository<User> _userRepository;
-
-        public UserService(IGenericRepository<User> UserRepository)
+        private readonly IPasswordHelper _passwordHelper;
+        public UserService(IGenericRepository<User> UserRepository, IPasswordHelper passwordHelper)
         {
             _userRepository = UserRepository;
+            _passwordHelper = passwordHelper;   
         }
         #endregion
 
@@ -43,12 +45,12 @@ namespace Eshop.Core.Services.Implementations
 
             _userRepository.AddEntity(new User
             {              
-                Email = register.Email,
-                FirstName = register.FirstName,
-                LastName = register.LastName,
-                Address = register.Address,
+                Email = register.Email.SanitizeText(),
+                FirstName = register.FirstName.SanitizeText(),
+                LastName = register.LastName.SanitizeText(),
+                Address = register.Address.SanitizeText(),
                 EmailActiveCode=Guid.NewGuid().ToString(),
-
+                Password = _passwordHelper.EncodePasswordMd5(register.Password)
             });
 
             _userRepository.SaveChanges();

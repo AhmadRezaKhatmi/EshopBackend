@@ -1,3 +1,4 @@
+using Eshop.Core.Security;
 using Eshop.Core.Services.Implementations;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Extensions.Connection;
@@ -33,7 +34,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-
+builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
 #endregion
 
 

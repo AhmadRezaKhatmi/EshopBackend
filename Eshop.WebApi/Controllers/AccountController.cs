@@ -46,7 +46,20 @@ namespace Eshop.WebApi.Controllers
 
         #endregion
 
+
+
         #region Login 
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] LoginUserDTO login)
+        {
+            if (!ModelState.IsValid)
+            {
+
+            }
+
+            return JsonResponseStatus.Success();
+
+        }
 
         #endregion
 
