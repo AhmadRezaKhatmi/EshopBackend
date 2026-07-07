@@ -1,6 +1,8 @@
-﻿using Eshop.Core.Services.Interfaces;
+﻿using Eshop.Core.DTOs.Account;
+using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Entities.Account;
 using Eshop.Data.Repository;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +33,42 @@ namespace Eshop.Core.Services.Implementations
         #endregion
 
 
+
+        public RegisterUserResult RegisterUser(RegisterUserDTO register)
+        {      
+            
+            if (IsUserExistsByEmail(register.Email))
+                return RegisterUserResult.EmailExists;
+
+
+            _userRepository.AddEntity(new User
+            {              
+                Email = register.Email,
+                FirstName = register.FirstName,
+                LastName = register.LastName,
+                Address = register.Address,
+                EmailActiveCode=Guid.NewGuid().ToString(),
+
+            });
+
+            _userRepository.SaveChanges();
+
+            return RegisterUserResult.Success;
+        }
+
+
+        public bool IsUserExistsByEmail(string email)
+        {
+            return _userRepository.GetEntitiesQuery().Any(u => u.Email == email.ToLower().Trim());
+        }
+
+
         #region Dispose
         public void Dispose()
         {
             _userRepository?.Dispose();
         }
+
         #endregion
     }
 }

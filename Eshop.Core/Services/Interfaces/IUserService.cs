@@ -1,4 +1,5 @@
-﻿using Eshop.Data.Entities.Account;
+﻿using Eshop.Core.DTOs.Account;
+using Eshop.Data.Entities.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,9 @@ namespace Eshop.Core.Services.Interfaces
     public interface IUserService : IDisposable
     {
         List<User> GetAllUsers();
+
+        RegisterUserResult RegisterUser(RegisterUserDTO register);
+
+        bool IsUserExistsByEmail(string email);
     }
 }
