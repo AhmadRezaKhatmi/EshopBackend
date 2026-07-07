@@ -22,7 +22,7 @@ namespace Eshop.WebApi.Controllers
 
         #region Register
 
-        [HttpPost]
+        [HttpPost("Register")]
         public IActionResult Register([FromBody] RegisterUserDTO register)
         {
             if (ModelState.IsValid)
