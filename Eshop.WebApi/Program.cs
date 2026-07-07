@@ -2,6 +2,9 @@ using Eshop.Core.Services.Implementations;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Extensions.Connection;
 using Eshop.Data.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +28,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 #endregion
 
 
-#region Application Services
+#region Add Application Services
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
@@ -34,7 +37,41 @@ builder.Services.AddScoped<IProductService, ProductService>();
 #endregion
 
 
+#region Add Authentication
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "https://localhost:44381",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EshopJwtBearer"))
+        };
+    });
+
+#endregion
+
+
+#region Add CORS
+
+builder.Services.AddCors(options =>
+ options.AddPolicy("EnableCors", builder =>
+ {
+     builder.WithOrigins("http://localhost:4200")
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+         .AllowCredentials()
+         .Build();
+ }));
+
+
+
+
+#endregion
 
 var app = builder.Build();
 
@@ -49,6 +86,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseCors("EnableCors");
+
+app.UseAuthentication();
 
 app.UseRouting();
 
