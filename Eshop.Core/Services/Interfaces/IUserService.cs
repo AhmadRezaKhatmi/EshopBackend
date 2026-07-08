@@ -16,5 +16,10 @@ namespace Eshop.Core.Services.Interfaces
         RegisterUserResult RegisterUser(RegisterUserDTO register);
 
         bool IsUserExistsByEmail(string email);
+
+        LoginUserResult LoginUser(LoginUserDTO loginUser);
+
+        User GetUserByEmail(string email);
+
     }
 }

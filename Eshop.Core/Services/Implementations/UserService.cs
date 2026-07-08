@@ -32,9 +32,25 @@ namespace Eshop.Core.Services.Implementations
         {
             return _userRepository.GetEntitiesQuery().ToList();
         }
+
+        public bool IsUserExistsByEmail(string email)
+        {
+            return _userRepository.GetEntitiesQuery().Any(u => u.Email == email.ToLower().Trim());
+        }
+
+        public bool IsUserExistsByEmailAndPassword(string email,string password)
+        {
+            return _userRepository.GetEntitiesQuery().Any(u => u.Email == email.ToLower().Trim() && u.Password==password);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.GetEntitiesQuery().SingleOrDefault(u => u.Email == email.ToLower().Trim());
+        }
+
         #endregion
 
-
+        #region Account
 
         public RegisterUserResult RegisterUser(RegisterUserDTO register)
         {      
@@ -59,10 +75,29 @@ namespace Eshop.Core.Services.Implementations
         }
 
 
-        public bool IsUserExistsByEmail(string email)
+
+        public LoginUserResult LoginUser(LoginUserDTO login)
         {
-            return _userRepository.GetEntitiesQuery().Any(u => u.Email == email.ToLower().Trim());
+            //****************************************Check Email Exist
+
+            if (!IsUserExistsByEmail(login.Email))
+                return LoginUserResult.IncorrectData;
+
+            //****************************************Check Activated
+            var user = GetUserByEmail(login.Email);
+            if(!user.IsActivated)
+                return LoginUserResult.NotActivated;
+
+            var loginHashedPassword = _passwordHelper.EncodePasswordMd5(login.Password);
+
+            //****************************************Check Email & Password
+            if (!IsUserExistsByEmailAndPassword(login.Email, loginHashedPassword))
+                return LoginUserResult.IncorrectData;
+
+            return LoginUserResult.Success;
         }
+
+        #endregion
 
 
         #region Dispose
@@ -70,7 +105,6 @@ namespace Eshop.Core.Services.Implementations
         {
             _userRepository?.Dispose();
         }
-
         #endregion
     }
 }

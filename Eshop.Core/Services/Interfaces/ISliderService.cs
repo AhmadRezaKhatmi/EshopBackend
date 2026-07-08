@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Core.Services.Implementations
+namespace Eshop.Core.Services.Interfaces
 {
     public interface ISliderService : IDisposable
     {

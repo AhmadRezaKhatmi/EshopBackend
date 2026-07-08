@@ -1,4 +1,4 @@
-﻿using Eshop.Core.Services.Implementations;
+﻿using Eshop.Core.Services.Interfaces;
 using Eshop.Data.Entities.Site;
 using Eshop.Data.Repository;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eshop.Core.Services.Interfaces
+namespace Eshop.Core.Services.Implementations
 {
     public class SliderService : ISliderService
     {
@@ -32,7 +32,7 @@ namespace Eshop.Core.Services.Interfaces
         public List<Slider> GetActiveSliders()
         {
             return _sliderRepository.GetEntitiesQuery().
-                Where(x=>x.IsDelete!=true)
+                Where(x => x.IsDelete != true)
                 .ToList();
         }
 

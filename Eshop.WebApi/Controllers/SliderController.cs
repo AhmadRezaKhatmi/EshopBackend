@@ -1,4 +1,4 @@
-﻿using Eshop.Core.Services.Implementations;
+﻿using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

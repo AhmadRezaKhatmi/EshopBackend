@@ -19,7 +19,12 @@ namespace Eshop.Core.DTOs.Account
         [MaxLength(100, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
         public string Password { get; set; }
 
+    }
 
-
+    public enum LoginUserResult
+    {
+        Success,
+        IncorrectData,
+        NotActivated
     }
 }
