@@ -57,7 +57,7 @@ namespace Eshop.WebApi.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] LoginUserDTO login)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var res = _userService.LoginUser(login);
 
@@ -76,7 +76,7 @@ namespace Eshop.WebApi.Controllers
 
                     case LoginUserResult.Success:
                         var user = _userService.GetUserByEmail(login.Email);
-                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EshopJwtBearer"));
+                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EshopJwtBearerSymmetricSecurityKey"));
                         var signInCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                         var tokenOptions = new JwtSecurityToken(
                             issuer: "https://localhost:44381",
@@ -97,7 +97,8 @@ namespace Eshop.WebApi.Controllers
                             expireTime = 30,
                             firstName = user.FirstName,
                             lastName = user.LastName,
-                            userId = user.Id
+                            userId = user.Id,
+                            address = user.Address
                         });
                 }
 

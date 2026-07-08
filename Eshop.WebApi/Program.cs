@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = "https://localhost:44381",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EshopJwtBearer"))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EshopJwtBearerSymmetricSecurityKey"))
         };
     });
 
