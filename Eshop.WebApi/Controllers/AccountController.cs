@@ -1,6 +1,7 @@
 ﻿using Eshop.Core.DTOs.Account;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Common;
+using Eshop.Core.Utilities.Extensions.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace Eshop.WebApi.Controllers
                     case RegisterUserResult.EmailExists:
                         return JsonResponseStatus.Error(new
                         {
-                            status = "EmailExist"
+                            status = "EmailExists"
                         });
 
                 }
@@ -110,9 +111,35 @@ namespace Eshop.WebApi.Controllers
 
         #endregion
 
+
+        #region Check User Authentication
+
+        [HttpPost("check-auth")]
+        public IActionResult CheckUserAuth()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _userService.GetUserByUserId(User.GetUserId());
+                return JsonResponseStatus.Success(new
+                {
+                    userId=user.Id,
+                    firstName = user.FirstName,
+                    lastName= user.LastName,  
+                    address= user.Address,
+                    email= user.Email,
+
+                });
+
+            }
+            return JsonResponseStatus.Error();
+        }
+
+        #endregion
+
+
         #region Sign Out
 
-        [HttpGet("Sign_Out")]
+        [HttpGet("sign-out")]
         public IActionResult LogOut()
         {
             if (User.Identity.IsAuthenticated)

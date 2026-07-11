@@ -48,6 +48,11 @@ namespace Eshop.Core.Services.Implementations
             return _userRepository.GetEntitiesQuery().SingleOrDefault(u => u.Email == email.ToLower().Trim());
         }
 
+        public User GetUserByUserId(long userId)
+        {
+            return _userRepository.GetEntityById(userId);
+        }
+
         #endregion
 
         #region Account

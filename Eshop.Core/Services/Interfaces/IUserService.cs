@@ -21,5 +21,7 @@ namespace Eshop.Core.Services.Interfaces
 
         User GetUserByEmail(string email);
 
+        User GetUserByUserId(long userId);
+
     }
 }
