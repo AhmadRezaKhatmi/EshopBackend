@@ -53,16 +53,23 @@ namespace Eshop.Core.Services.Implementations
 
         public FilterProductsDTO FilterProducts(FilterProductsDTO filter)
         {
+            //Base Query
             var productsQuery = _productRepository.GetEntitiesQuery().AsQueryable();
 
+            //Filter Title
             if (!string.IsNullOrEmpty(filter.Title))
                 productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
 
+
+            //Filter StartPrice
             productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
 
+
+            //Filter EndPrice
             if (filter.EndPrice != 0)
                 productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
 
+            //Paging
             var count = (int)Math.Ceiling(productsQuery.Count() / (double)filter.TakeEntity);
 
             var pager = Pager.Build(count, filter.PageId, filter.TakeEntity);
