@@ -17,8 +17,15 @@ namespace Eshop.Core.Services.Interfaces
 
         void UpdateProduct(Product product);
 
-        FilterProductsDTO FilterProducts(FilterProductsDTO filter); 
+        FilterProductsDTO FilterProducts(FilterProductsDTO filter);
         #endregion
 
+
+
+        #region Product Categories
+
+        List<ProductCategory> GetAllActiveProductCategories();
+
+        #endregion
     }
 }

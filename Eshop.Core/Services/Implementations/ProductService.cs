@@ -82,6 +82,17 @@ namespace Eshop.Core.Services.Implementations
         #endregion
 
 
+        #region Product Categories
+
+        public  List<ProductCategory> GetAllActiveProductCategories()
+        {
+            return _productCategoryRepository.GetEntitiesQuery().Where(item => !item.IsDelete).ToList();
+        }
+
+        #endregion
+
+
+
         #region Dispose
         public void Dispose()
         {

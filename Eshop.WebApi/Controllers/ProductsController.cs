@@ -36,5 +36,20 @@ namespace Eshop.WebApi.Controllers
         }
 
         #endregion
+
+
+
+        #region Products Categories
+
+        [HttpGet("product-active-categories")]
+        public IActionResult GetProductsCategories()
+        {
+            var productsCategories=_productService.GetAllActiveProductCategories();
+
+
+            return JsonResponseStatus.Success(productsCategories);
+        }
+
+        #endregion
     }
 }
