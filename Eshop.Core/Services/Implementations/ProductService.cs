@@ -1,4 +1,7 @@
-﻿using Eshop.Core.Services.Interfaces;
+﻿using Eshop.Core.DTOs.Paging;
+using Eshop.Core.DTOs.Products;
+using Eshop.Core.Services.Interfaces;
+using Eshop.Core.Utilities.Extensions.Paging;
 using Eshop.Data.Entities.Product;
 using Eshop.Data.Repository;
 using System;
@@ -48,6 +51,27 @@ namespace Eshop.Core.Services.Implementations
             _productRepository.SaveChanges();
         }
 
+        public FilterProductsDTO FilterProducts(FilterProductsDTO filter)
+        {
+            var productsQuery = _productRepository.GetEntitiesQuery().AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.Title))
+                productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
+
+            productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
+
+            if (filter.EndPrice != 0)
+                productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
+
+            var count = (int)Math.Ceiling(productsQuery.Count() / (double)filter.TakeEntity);
+
+            var pager = Pager.Build(count, filter.PageId, filter.TakeEntity);
+
+            var products =productsQuery.Paging(pager).ToList();
+
+            return filter.SetProducts(products).SetPaging(pager);
+        }
+
         #endregion
 
 
@@ -61,6 +85,7 @@ namespace Eshop.Core.Services.Implementations
             _productSelectedCategoryRepository.Dispose();
         }
 
-        #endregion 
+
+        #endregion
     }
 }

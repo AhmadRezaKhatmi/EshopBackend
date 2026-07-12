@@ -1,4 +1,5 @@
-﻿using Eshop.Data.Entities.Product;
+﻿using Eshop.Core.DTOs.Products;
+using Eshop.Data.Entities.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Eshop.Core.Services.Interfaces
 
         void UpdateProduct(Product product);
 
+        FilterProductsDTO FilterProducts(FilterProductsDTO filter); 
         #endregion
 
     }
