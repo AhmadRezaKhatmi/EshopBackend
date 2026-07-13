@@ -65,6 +65,14 @@ namespace Eshop.Core.Services.Implementations
             productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
 
 
+            //Filter ProductCategoryIds
+            if (filter.Categories != null && filter.Categories.Any())
+                productsQuery = productsQuery.
+                    SelectMany(s => s.ProductSelectedCategories.
+                    Where(f => filter.Categories.Contains(f.ProductCategoryId)).
+                    Select(t => t.Product));
+
+
             //Filter EndPrice
             if (filter.EndPrice != 0)
                 productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
@@ -76,6 +84,7 @@ namespace Eshop.Core.Services.Implementations
 
             var products =productsQuery.Paging(pager).ToList();
 
+            //Return Final Result
             return filter.SetProducts(products).SetPaging(pager);
         }
 
