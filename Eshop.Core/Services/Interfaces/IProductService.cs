@@ -18,6 +18,9 @@ namespace Eshop.Core.Services.Interfaces
         void UpdateProduct(Product product);
 
         FilterProductsDTO FilterProducts(FilterProductsDTO filter);
+
+        Product GetProductById(long productId);
+
         #endregion
 
 

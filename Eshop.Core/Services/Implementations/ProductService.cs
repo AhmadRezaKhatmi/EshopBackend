@@ -52,6 +52,12 @@ namespace Eshop.Core.Services.Implementations
             _productRepository.SaveChanges();
         }
 
+
+        public Product GetProductById(long productId)
+        {
+            return _productRepository.GetEntityById(productId);
+        }
+
         public FilterProductsDTO FilterProducts(FilterProductsDTO filter)
         {
             //Base Query

@@ -44,10 +44,26 @@ namespace Eshop.WebApi.Controllers
         [HttpGet("product-active-categories")]
         public IActionResult GetProductsCategories()
         {
-            var productsCategories=_productService.GetAllActiveProductCategories();
+            var productsCategories = _productService.GetAllActiveProductCategories();
 
 
             return JsonResponseStatus.Success(productsCategories);
+        }
+
+        #endregion
+
+
+        #region Get Single Product
+
+        [HttpGet("single-product/{id}")]
+        public IActionResult GetProduct(long id)
+        {
+            var product = _productService.GetProductById(id);
+
+            if(product!=null)
+                return JsonResponseStatus.Success(product);
+
+            return JsonResponseStatus.NotFound();
         }
 
         #endregion
