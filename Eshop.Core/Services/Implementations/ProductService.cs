@@ -76,7 +76,13 @@ namespace Eshop.Core.Services.Implementations
 
 
             //Filter StartPrice
+            if (filter.StartPrice!=0)
             productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
+
+
+            //Filter EndPrice
+            if (filter.EndPrice != 0)
+                productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
 
 
             //Filter ProductCategoryIds
