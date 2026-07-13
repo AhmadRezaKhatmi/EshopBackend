@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Eshop.Core.DTOs.Products.FilterProductsDTO;
 
 namespace Eshop.Core.Services.Implementations
 {
@@ -56,6 +57,19 @@ namespace Eshop.Core.Services.Implementations
             //Base Query
             var productsQuery = _productRepository.GetEntitiesQuery().AsQueryable();
 
+
+            //Order By
+            switch (filter.OrderBy)
+            {
+                case ProductOrderBy.PriceAsc:
+                    productsQuery = productsQuery.OrderBy(x => x.Price);
+                    break;
+                case ProductOrderBy.PriceDec:
+                    productsQuery = productsQuery.OrderByDescending(x => x.Price);
+                    break;
+            }
+
+
             //Filter Title
             if (!string.IsNullOrEmpty(filter.Title))
                 productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
@@ -82,7 +96,7 @@ namespace Eshop.Core.Services.Implementations
 
             var pager = Pager.Build(count, filter.PageId, filter.TakeEntity);
 
-            var products =productsQuery.Paging(pager).ToList();
+            var products = productsQuery.Paging(pager).ToList();
 
             //Return Final Result
             return filter.SetProducts(products).SetPaging(pager);
@@ -93,7 +107,7 @@ namespace Eshop.Core.Services.Implementations
 
         #region Product Categories
 
-        public  List<ProductCategory> GetAllActiveProductCategories()
+        public List<ProductCategory> GetAllActiveProductCategories()
         {
             return _productCategoryRepository.GetEntitiesQuery().Where(item => !item.IsDelete).ToList();
         }

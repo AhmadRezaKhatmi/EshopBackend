@@ -14,7 +14,9 @@ namespace Eshop.Core.DTOs.Products
 
         public List<Product>? Products { get; set; }
 
-        public List<long>? Categories{ get; set; }
+        public List<long>? Categories { get; set; }
+
+        public ProductOrderBy OrderBy { get; set; }
 
         public FilterProductsDTO SetPaging(BasePaging paging)
         {
@@ -33,5 +35,11 @@ namespace Eshop.Core.DTOs.Products
             this.Products = products;
             return this;
         }
-    }
+
+        public enum ProductOrderBy 
+        {
+            PriceAsc,
+            PriceDec
+        }
+    } 
 }
