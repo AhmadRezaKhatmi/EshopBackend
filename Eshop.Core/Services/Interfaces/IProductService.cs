@@ -30,5 +30,13 @@ namespace Eshop.Core.Services.Interfaces
         List<ProductCategory> GetAllActiveProductCategories();
 
         #endregion
+
+
+
+        #region Product Galleries
+
+        List<ProductGallery> GetProductActiveGalleries(long productId);
+
+        #endregion
     }
 }

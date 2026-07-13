@@ -127,6 +127,24 @@ namespace Eshop.Core.Services.Implementations
         #endregion
 
 
+        #region Product Galleries
+
+        public List<ProductGallery> GetProductActiveGalleries(long productId)
+        {
+            return _productGalleryRepository.GetEntitiesQuery().
+                Where(x => x.ProductId == productId && x.IsDelete==false).
+                Select(s=>new ProductGallery
+                {
+                    ProductId=s.ProductId,
+                    Id=productId,
+                    ImageName=s.ImageName,
+                    CreateDate=s.CreateDate
+                }).
+                ToList();
+        }
+
+        #endregion
+
 
         #region Dispose
         public void Dispose()

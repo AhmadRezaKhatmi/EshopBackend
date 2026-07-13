@@ -60,8 +60,13 @@ namespace Eshop.WebApi.Controllers
         {
             var product = _productService.GetProductById(id);
 
+            var productGalleries = _productService.GetProductActiveGalleries(id);
+            
             if(product!=null)
-                return JsonResponseStatus.Success(product);
+                return JsonResponseStatus.Success(new
+                {
+                    product=product,galleries=productGalleries
+                });
 
             return JsonResponseStatus.NotFound();
         }
