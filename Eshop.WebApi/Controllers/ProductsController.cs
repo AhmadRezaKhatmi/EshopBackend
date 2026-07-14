@@ -1,6 +1,7 @@
 ﻿using Eshop.Core.DTOs.Products;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Common;
+using Eshop.Data.Entities.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,20 @@ namespace Eshop.WebApi.Controllers
                 });
 
             return JsonResponseStatus.NotFound();
+        }
+
+        #endregion
+
+
+
+        #region  Related Products
+
+        [HttpGet("related-products/{id}")]
+        public IActionResult GetRelatedProducts(long id)
+        {
+            var ralatedProducts = _productService.GetRelatedProducts(id);
+
+            return JsonResponseStatus.Success(ralatedProducts);
         }
 
         #endregion

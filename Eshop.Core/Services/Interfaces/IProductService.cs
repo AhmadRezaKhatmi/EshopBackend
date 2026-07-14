@@ -21,6 +21,8 @@ namespace Eshop.Core.Services.Interfaces
 
         Product GetProductById(long productId);
 
+        List<Product> GetRelatedProducts(long productId);
+
         #endregion
 
 

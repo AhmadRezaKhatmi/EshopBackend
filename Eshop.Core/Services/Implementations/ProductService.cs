@@ -58,6 +58,31 @@ namespace Eshop.Core.Services.Implementations
             return _productRepository.GetEntityById(productId);
         }
 
+
+        public List<Product> GetRelatedProducts(long productId)
+        {
+            //Get Product
+            var product=_productRepository.GetEntityById(productId);
+
+            //If Is Null Return Null
+            if (product == null) 
+                return null;
+
+            var productCategoriesList = _productSelectedCategoryRepository.GetEntitiesQuery().
+                Where(x => x.ProductId == productId).Select(c => c.ProductCategoryId);
+
+            var relatedProducts = _productRepository.GetEntitiesQuery().
+                SelectMany(s => s.ProductSelectedCategories.
+                Where(f => productCategoriesList.Contains(f.ProductCategoryId)).
+                Select(t => t.Product)).
+                Where(s=>s.Id!=productId).
+                OrderByDescending(s=>s.CreateDate).
+                Take(4).
+                ToList();
+
+            return relatedProducts;
+        }
+
         public FilterProductsDTO FilterProducts(FilterProductsDTO filter)
         {
             //Base Query
