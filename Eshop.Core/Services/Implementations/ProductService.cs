@@ -185,19 +185,21 @@ namespace Eshop.Core.Services.Implementations
 
         public List<ProductCommentDTO> GetProductActiveComments(long productId)
         {
-            return _productCommentRepository
-          .GetEntitiesQuery()
-          .Include(s => s.User)
-          .Where(c => c.ProductId == productId && !c.IsDelete)
-          .OrderByDescending(s => s.CreateDate)
-          .Select(s => new ProductCommentDTO
-          {
-              Id = s.Id,
-              Text = s.Text,
-              UserId = s.UserId,
-              UserFullName = s.User.FirstName + " " + s.User.LastName,
-              CreateDate = s.CreateDate.ToString("yyyy/MM/dd HH:mm")
-          }).ToList();
+            var productComments = _productCommentRepository
+            .GetEntitiesQuery()
+            .Include(s => s.User)
+            .Where(c => c.ProductId == productId && !c.IsDelete)
+            .OrderByDescending(s => s.CreateDate)
+            .Select(s => new ProductCommentDTO
+            {
+                Id = s.Id,
+                Text = s.Text,
+                UserId = s.UserId,
+                UserFullName = s.User.FirstName + " " + s.User.LastName,
+                CreateDate = s.CreateDate.ToString("yyyy/MM/dd HH:mm")
+            }).ToList();
+
+            return productComments;
         }
 
         #endregion
