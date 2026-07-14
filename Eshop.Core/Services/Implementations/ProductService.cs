@@ -176,10 +176,26 @@ namespace Eshop.Core.Services.Implementations
 
         #region Product Comments
 
-        public void AddCommentToProduct(ProductComment comment)
+        public ProductCommentDTO AddCommentToProduct(AddProductCommentDTO comment, long userId)
         {
-            _productCommentRepository.AddEntity(comment);
+            var productComment = new ProductComment
+            {
+                UserId = userId,
+                ProductId = comment.ProductId,
+                Text = comment.Text,    
+            };
+
+            _productCommentRepository.AddEntity(productComment);
             _productCommentRepository.SaveChanges();
+
+            return new ProductCommentDTO
+            {
+                Id = productComment.Id,
+                CreateDate = productComment.CreateDate.ToString("yyyy/MM/dd HH:mm"),
+                Text = productComment.Text,
+                UserId = userId,
+                UserFullName = ""
+            };
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using Eshop.Core.DTOs.Products;
 using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Common;
+using Eshop.Core.Utilities.Extensions.Identity;
 using Eshop.Data.Entities.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -100,6 +101,30 @@ namespace Eshop.WebApi.Controllers
             return JsonResponseStatus.Success(comments);    
 
         }
+
+
+        [HttpPost("add-product-comment")]
+        public IActionResult AddProductComment([FromBody] AddProductCommentDTO comment)
+        {
+            //Check IsAuthenticated
+            if (!User.Identity.IsAuthenticated)
+                return JsonResponseStatus.Error(new { message = "لطفا ابتدا وارد سایت شوید" });
+
+            //Check Product Exists
+            var product = _productService.GetProductById(comment.ProductId);
+
+            if (product == null)
+                return JsonResponseStatus.NotFound();
+
+            //Get UserId
+            var userId = User.GetUserId();
+
+            //Add Product Comment
+           var res= _productService.AddCommentToProduct(comment, userId);
+
+            return JsonResponseStatus.Success(res);
+        }
+
         #endregion
 
 

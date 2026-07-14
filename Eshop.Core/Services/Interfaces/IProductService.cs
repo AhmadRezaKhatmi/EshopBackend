@@ -45,7 +45,7 @@ namespace Eshop.Core.Services.Interfaces
 
         #region Product Comments
 
-        void AddCommentToProduct(ProductComment comment);
+        ProductCommentDTO AddCommentToProduct(AddProductCommentDTO comment,long userId);
 
         List<ProductCommentDTO> GetProductActiveComments(long productId);
 
