@@ -51,12 +51,6 @@ namespace Eshop.Core.Services.Implementations
 
         public Order GetUserOpenOrder(long userId)
         {
-            var user = _userService.GetUserByUserId(userId);
-
-            if (user == null)
-                return null;
-
-
             var order = _orderRepository.GetEntitiesQuery().
                 SingleOrDefault(o => o.UserId == userId && o.IsPay != null);
 
