@@ -40,5 +40,15 @@ namespace Eshop.Core.Services.Interfaces
         List<ProductGallery> GetProductActiveGalleries(long productId);
 
         #endregion
+
+
+
+        #region Product Comments
+
+        void AddCommentToProduct(ProductComment comment);
+
+        List<ProductCommentDTO> GetProductActiveComments(long productId);
+
+        #endregion
     }
 }

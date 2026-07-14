@@ -4,6 +4,7 @@ using Eshop.Core.Services.Interfaces;
 using Eshop.Core.Utilities.Extensions.Paging;
 using Eshop.Data.Entities.Product;
 using Eshop.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,18 +23,21 @@ namespace Eshop.Core.Services.Implementations
         private readonly IGenericRepository<ProductGallery> _productGalleryRepository;
         private readonly IGenericRepository<ProductSelectedCategory> _productSelectedCategoryRepository;
         private readonly IGenericRepository<ProductVisit> _productVisitRepository;
+        private readonly IGenericRepository<ProductComment> _productCommentRepository;
 
         public ProductService(IGenericRepository<Product> ProductRepository,
                               IGenericRepository<ProductCategory> ProductCategoryRepository,
                               IGenericRepository<ProductGallery> ProductGalleryRepository,
                               IGenericRepository<ProductSelectedCategory> ProductSelectedCategoryRepository,
-                              IGenericRepository<ProductVisit> ProductVisitRepository)
+                              IGenericRepository<ProductVisit> ProductVisitRepository,
+                              IGenericRepository<ProductComment> productCommentRepository)
         {
             _productRepository = ProductRepository;
             _productCategoryRepository = ProductCategoryRepository;
             _productGalleryRepository = ProductGalleryRepository;
             _productVisitRepository = ProductVisitRepository;
             _productSelectedCategoryRepository = ProductSelectedCategoryRepository;
+            _productCommentRepository = productCommentRepository;
         }
 
         #endregion
@@ -62,10 +66,10 @@ namespace Eshop.Core.Services.Implementations
         public List<Product> GetRelatedProducts(long productId)
         {
             //Get Product
-            var product=_productRepository.GetEntityById(productId);
+            var product = _productRepository.GetEntityById(productId);
 
             //If Is Null Return Null
-            if (product == null) 
+            if (product == null)
                 return null;
 
             var productCategoriesList = _productSelectedCategoryRepository.GetEntitiesQuery().
@@ -75,8 +79,8 @@ namespace Eshop.Core.Services.Implementations
                 SelectMany(s => s.ProductSelectedCategories.
                 Where(f => productCategoriesList.Contains(f.ProductCategoryId)).
                 Select(t => t.Product)).
-                Where(s=>s.Id!=productId).
-                OrderByDescending(s=>s.CreateDate).
+                Where(s => s.Id != productId).
+                OrderByDescending(s => s.CreateDate).
                 Take(4).
                 ToList();
 
@@ -107,8 +111,8 @@ namespace Eshop.Core.Services.Implementations
 
 
             //Filter StartPrice
-            if (filter.StartPrice!=0)
-            productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
+            if (filter.StartPrice != 0)
+                productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
 
 
             //Filter EndPrice
@@ -157,15 +161,43 @@ namespace Eshop.Core.Services.Implementations
         public List<ProductGallery> GetProductActiveGalleries(long productId)
         {
             return _productGalleryRepository.GetEntitiesQuery().
-                Where(x => x.ProductId == productId && x.IsDelete==false).
-                Select(s=>new ProductGallery
+                Where(x => x.ProductId == productId && x.IsDelete == false).
+                Select(s => new ProductGallery
                 {
-                    ProductId=s.ProductId,
-                    Id=productId,
-                    ImageName=s.ImageName,
-                    CreateDate=s.CreateDate
+                    ProductId = s.ProductId,
+                    Id = productId,
+                    ImageName = s.ImageName,
+                    CreateDate = s.CreateDate
                 }).
                 ToList();
+        }
+
+        #endregion
+
+        #region Product Comments
+
+        public void AddCommentToProduct(ProductComment comment)
+        {
+            _productCommentRepository.AddEntity(comment);
+            _productCommentRepository.SaveChanges();
+
+        }
+
+        public List<ProductCommentDTO> GetProductActiveComments(long productId)
+        {
+            return _productCommentRepository
+          .GetEntitiesQuery()
+          .Include(s => s.User)
+          .Where(c => c.ProductId == productId && !c.IsDelete)
+          .OrderByDescending(s => s.CreateDate)
+          .Select(s => new ProductCommentDTO
+          {
+              Id = s.Id,
+              Text = s.Text,
+              UserId = s.UserId,
+              UserFullName = s.User.FirstName + " " + s.User.LastName,
+              CreateDate = s.CreateDate.ToString("yyyy/MM/dd HH:mm")
+          }).ToList();
         }
 
         #endregion

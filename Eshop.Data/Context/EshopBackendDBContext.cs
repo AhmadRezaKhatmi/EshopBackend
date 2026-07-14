@@ -42,6 +42,8 @@ namespace Eshop.Data.Context
         public DbSet<ProductVisit> ProductVisits { get; set; }
 
         public DbSet<Slider> Sliders { get; set; }
+
+        public DbSet<ProductComment> ProductComments { get; set; }
         #endregion
 
 

@@ -1,5 +1,6 @@
 ﻿using Eshop.Data.Entities.Access;
 using Eshop.Data.Entities.Common;
+using Eshop.Data.Entities.Product;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -51,6 +52,8 @@ namespace Eshop.Data.Entities.Account
         #region Relations
 
         public ICollection<UserRole> UserRoles { get; set; }
+
+        public ICollection<ProductComment> ProductComments { get; set; }
 
         #endregion
     }

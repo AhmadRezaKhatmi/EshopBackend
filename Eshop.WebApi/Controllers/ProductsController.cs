@@ -62,11 +62,12 @@ namespace Eshop.WebApi.Controllers
             var product = _productService.GetProductById(id);
 
             var productGalleries = _productService.GetProductActiveGalleries(id);
-            
-            if(product!=null)
+
+            if (product != null)
                 return JsonResponseStatus.Success(new
                 {
-                    product=product,galleries=productGalleries
+                    product = product,
+                    galleries = productGalleries
                 });
 
             return JsonResponseStatus.NotFound();
@@ -87,5 +88,20 @@ namespace Eshop.WebApi.Controllers
         }
 
         #endregion
+
+
+        #region Product Comments
+
+        [HttpGet("product-comments/{id}")]
+        public IActionResult GetProductComments(long id)
+        {
+            var comments=_productService.GetProductActiveComments(id);
+
+            return JsonResponseStatus.Success(comments);    
+
+        }
+        #endregion
+
+
     }
 }
