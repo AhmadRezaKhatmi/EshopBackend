@@ -1,4 +1,5 @@
 ﻿using Eshop.Data.Entities.Common;
+using Eshop.Data.Entities.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -53,6 +54,8 @@ namespace Eshop.Data.Entities.Product
         public ICollection<ProductSelectedCategory> ProductSelectedCategories { get; set; }
 
         public ICollection<ProductComment> ProductComments { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         #endregion
 

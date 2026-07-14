@@ -96,9 +96,9 @@ namespace Eshop.WebApi.Controllers
         [HttpGet("product-comments/{id}")]
         public IActionResult GetProductComments(long id)
         {
-            var comments=_productService.GetProductActiveComments(id);
+            var comments = _productService.GetProductActiveComments(id);
 
-            return JsonResponseStatus.Success(comments);    
+            return JsonResponseStatus.Success(comments);
 
         }
 
@@ -120,7 +120,7 @@ namespace Eshop.WebApi.Controllers
             var userId = User.GetUserId();
 
             //Add Product Comment
-           var res= _productService.AddCommentToProduct(comment, userId);
+            var res = _productService.AddCommentToProduct(comment, userId);
 
             return JsonResponseStatus.Success(res);
         }

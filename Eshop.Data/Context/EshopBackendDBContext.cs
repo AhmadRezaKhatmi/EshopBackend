@@ -1,5 +1,6 @@
 ﻿using Eshop.Data.Entities.Access;
 using Eshop.Data.Entities.Account;
+using Eshop.Data.Entities.Orders;
 using Eshop.Data.Entities.Product;
 using Eshop.Data.Entities.Site;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,10 @@ namespace Eshop.Data.Context
         public DbSet<Slider> Sliders { get; set; }
 
         public DbSet<ProductComment> ProductComments { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         #endregion
 
 
