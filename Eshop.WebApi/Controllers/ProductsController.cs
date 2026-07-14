@@ -81,9 +81,9 @@ namespace Eshop.WebApi.Controllers
         [HttpGet("related-products/{id}")]
         public IActionResult GetRelatedProducts(long id)
         {
-            var ralatedProducts = _productService.GetRelatedProducts(id);
+            var relatedProducts = _productService.GetRelatedProducts(id);
 
-            return JsonResponseStatus.Success(ralatedProducts);
+            return JsonResponseStatus.Success(relatedProducts);
         }
 
         #endregion
