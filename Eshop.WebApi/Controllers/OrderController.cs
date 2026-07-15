@@ -33,10 +33,30 @@ namespace Eshop.WebApi.Controllers
 
                 _orderService.AddProductToOrder(userId, productId, count);
 
-                return JsonResponseStatus.Success(new { message = "محصول با موفقیت به سبد خرید شما اضافه شد" });
+                return JsonResponseStatus.Success(new { 
+                    message = "محصول با موفقیت به سبد خرید شما اضافه شد" ,
+                    details = _orderService.GetUserBasketDetails(userId)
+                });
             }
 
             return JsonResponseStatus.Error(new { message = "برای افزودن محصول به سبد خرید ، ابتدا لاگین کنید" });
+        }
+
+        #endregion
+
+
+        #region User Basket Details
+
+        [HttpGet("get-order-details")]
+        public IActionResult GetUserBasketDetails()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var details = _orderService.GetUserBasketDetails(User.GetUserId());
+                return JsonResponseStatus.Success(details);
+            }
+
+            return JsonResponseStatus.Error();
         }
 
         #endregion

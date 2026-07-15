@@ -1,4 +1,5 @@
-﻿using Eshop.Data.Entities.Orders;
+﻿using Eshop.Core.DTOs.Orders;
+using Eshop.Data.Entities.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Eshop.Core.Services.Interfaces
         void AddProductToOrder(long userId, long productId, int count);
         List<OrderDetail> GetOrderDetails(long orderId);
 
+        List<OrderBasketDetail> GetUserBasketDetails(long userId);
         #endregion
     }
 }

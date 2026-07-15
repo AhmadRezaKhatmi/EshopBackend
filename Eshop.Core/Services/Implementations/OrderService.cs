@@ -1,6 +1,9 @@
-﻿using Eshop.Core.Services.Interfaces;
+﻿using Eshop.Core.DTOs.Orders;
+using Eshop.Core.Services.Interfaces;
+using Eshop.Core.Utilities.Common;
 using Eshop.Data.Entities.Orders;
 using Eshop.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +55,8 @@ namespace Eshop.Core.Services.Implementations
         public Order GetUserOpenOrder(long userId)
         {
             var order = _orderRepository.GetEntitiesQuery().
+                Include(s=>s.OrderDetails).
+                ThenInclude(s=>s.Product).
                 SingleOrDefault(o => o.UserId == userId && o.IsPay != null);
 
             if (order == null)
@@ -112,6 +117,25 @@ namespace Eshop.Core.Services.Implementations
                 Where(od => od.OrderId == orderId).
                 ToList();
         }
+
+
+        public List<OrderBasketDetail> GetUserBasketDetails(long userId)
+        {
+            var openOrder = GetUserOpenOrder(userId);
+
+            if (openOrder == null) 
+                return null;
+
+            var x = openOrder.OrderDetails;
+
+            return openOrder.OrderDetails.Select(f => new OrderBasketDetail
+            {
+                Count = f.Count,
+                Price = f.Price,
+                Title = f.Product.ProductName,
+                ImageName = PathTools.Domain + PathTools.ProductImagePath + f.Product.ImageName
+            }).ToList();
+        } 
 
         #endregion
     }
