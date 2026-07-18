@@ -23,6 +23,8 @@ namespace Eshop.Core.Services.Interfaces
         List<OrderDetail> GetOrderDetails(long orderId);
 
         List<OrderBasketDetail> GetUserBasketDetails(long userId);
+
+        void DeleteOrderDetail(OrderDetail Detail);
         #endregion
     }
 }

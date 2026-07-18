@@ -135,7 +135,13 @@ namespace Eshop.Core.Services.Implementations
                 Title = f.Product.ProductName,
                 ImageName = PathTools.Domain + PathTools.ProductImagePath + f.Product.ImageName
             }).ToList();
-        } 
+        }
+
+        public void DeleteOrderDetail(OrderDetail Detail)
+        {
+            _orderDetailRepository.RemoveEntity(Detail);
+            _orderDetailRepository.SaveChanges();
+        }
 
         #endregion
     }

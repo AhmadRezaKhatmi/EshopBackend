@@ -61,5 +61,32 @@ namespace Eshop.WebApi.Controllers
 
         #endregion
 
+
+        #region Remove Order Detail From Basket 
+
+        [HttpGet("remove-order-detail/{detailId}")]
+        public IActionResult RemoveOrderDetail(int detailId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.GetUserId();
+                var userOpenOrder = _orderService.GetUserOpenOrder(userId);
+
+                var detail = userOpenOrder.OrderDetails.
+                    SingleOrDefault(od => od.Id == detailId);
+
+                if (detail !=null)
+                {
+                    _orderService.DeleteOrderDetail(detail);
+
+                    return JsonResponseStatus.Success(_orderService.GetUserBasketDetails(userId));
+                }
+                
+            }
+            return JsonResponseStatus.Error();
+        }
+
+        #endregion
+
     }
 }
