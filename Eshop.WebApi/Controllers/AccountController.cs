@@ -71,7 +71,7 @@ namespace Eshop.WebApi.Controllers
                     case LoginUserResult.NotActivated:
                         return JsonResponseStatus.Error(new
                         {
-                            message="حساب کاربری شما فعال نشده است "
+                            message = "حساب کاربری شما فعال نشده است "
                         });
 
 
@@ -122,11 +122,11 @@ namespace Eshop.WebApi.Controllers
                 var user = _userService.GetUserByUserId(User.GetUserId());
                 return JsonResponseStatus.Success(new
                 {
-                    userId=user.Id,
+                    userId = user.Id,
                     firstName = user.FirstName,
-                    lastName= user.LastName,  
-                    address= user.Address,
-                    email= user.Email,
+                    lastName = user.LastName,
+                    address = user.Address,
+                    email = user.Email,
 
                 });
 
@@ -135,6 +135,25 @@ namespace Eshop.WebApi.Controllers
         }
 
         #endregion
+
+        [HttpPost("edit-user")]
+        public async Task<IActionResult> EditUser([FromBody] EditUserDTO editUser)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+
+                _userService.EditUserInfo(editUser, User.GetUserId());
+
+                return JsonResponseStatus.Success(new
+                {
+                    message="اطلاعات کاربر با موفقیت ویرایش شد"
+                });
+            }
+
+            return JsonResponseStatus.UnAuthorized();
+        }
+
+
 
 
         #region Sign Out
@@ -150,7 +169,7 @@ namespace Eshop.WebApi.Controllers
 
             return JsonResponseStatus.Error();
         }
-          
+
         #endregion
 
     }

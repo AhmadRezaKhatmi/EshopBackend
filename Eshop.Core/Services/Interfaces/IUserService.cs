@@ -23,5 +23,7 @@ namespace Eshop.Core.Services.Interfaces
 
         User GetUserByUserId(long userId);
 
+        void EditUserInfo(EditUserDTO editUser,long userId);
+
     }
 }

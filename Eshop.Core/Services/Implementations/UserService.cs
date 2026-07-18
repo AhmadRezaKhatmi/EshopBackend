@@ -53,6 +53,23 @@ namespace Eshop.Core.Services.Implementations
             return _userRepository.GetEntityById(userId);
         }
 
+
+        public void EditUserInfo(EditUserDTO editUser, long userId)
+        {
+            var user = GetUserByUserId(userId);
+
+            if (user != null) 
+            { 
+                user.Address = editUser.Address;
+                user.FirstName = editUser.FirstName;
+                user.LastName = editUser.LastName;
+                _userRepository.UpdateEntity(user);
+                _userRepository.SaveChanges();
+            }
+
+
+        }
+
         #endregion
 
         #region Account

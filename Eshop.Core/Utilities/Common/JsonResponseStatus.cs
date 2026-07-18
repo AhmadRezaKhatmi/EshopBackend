@@ -42,5 +42,15 @@ namespace Eshop.Core.Utilities.Common
             return new JsonResult(new { status = "Error", Data = returnData });
         }
 
+        public static JsonResult UnAuthorized()
+        {
+            return new JsonResult(new { status = "UnAuthorized" });
+        }
+
+        public static JsonResult UnAuthorized(object returnData)
+        {
+            return new JsonResult(new { status = "UnAuthorized", data = returnData });
+        }
+
     }
 }
